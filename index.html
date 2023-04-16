@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"
+      integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.0.1/chartjs-plugin-zoom.min.js"
+      integrity="sha512-b+q5md1qwYUeYsuOBx+E8MzhsDSZeoE80dPP1VCw9k/KA9LORQmaH3RuXjlpu3u1rfUwh7s6SHthZM3sUGzCkA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+
+  <body>
+    <div id="app" class="container">
+      <!-- меню -->
+      <header>
+        <ul class="mmenuu">
+          <li>
+            <a href="#">Меню</a>
+            <ul class="ssubmenuu">
+              <li><a href="#">Сохранить</a></li>
+              <li><a href="#">Сохранить как</a></li>
+              <li><a href="#">Настройки</a></li>
+              <li><a href="#">Помощь</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul>
+          <!-- иконки -->
+          <li class="icon_el"><img class="icon" src="img/savepng.png" /></li>
+          <li class="icon_el"><img class="icon" src="img/saveaspng.png" /></li>
+          <li class="icon_el"><img class="icon" src="img/settingspng.png" /></li>
+          <li class="icon_el"><img class="icon" src="img/helppng.png" /></li>
+        </ul>
+
+        <div id="main">
+          <nav v-bind:class="active" v-on:click.prevent>
+            <!-- выбор вкладки по клику -->
+
+            <a href="#" class="option file" v-on:click="makeActive('file')">Выбор файла</a>
+            <a href="#" class="option data" v-on:click="makeActive('data')">Данные</a>
+            <a href="#" class="option settingskp" v-on:click="makeActive('settingskp')"
+              >Параметры по КП</a
+            >
+
+            <a href="#" class="option diag" v-on:click="makeActive('diag')">Диаграммы</a>
+            <a href="#" class="option graphs" v-on:click="makeActive('graphs')">Графики</a>
+          </nav>
+          <div class="tab-content">
+            <!-- содержание вкладок -->
+            <div v-if="active == 'file'">Выбор файла</div>
+            <div v-if="active == 'data'">Данные</div>
+            <div v-if="active == 'settingskp'">Параметры по КП</div>
+            <div v-if="active == 'diag'">Диаграммы</div>
+            <div v-show="active=='graphs'">
+              <div class="menu">
+                <div class="settings">
+                  <div class="settings_top">
+                    <div class="show_dots">
+                      <!-- отображение точек по клику -->
+                      <label for="dots">Показать точки</label>
+                      <input type="checkbox" id="dots" name="dots" @click="addDots" />
+                    </div>
+
+                    <div class="razmer">
+                      <!-- выбор размера линий  -->
+                      <span>Толщина линии</span>
+                      <select id="tolsh">
+                        <option selected value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="settings_down">
+                    <div class="row">
+                      <div class="color"></div>
+                      <div class="plot">
+                        <input
+                          class="color_option"
+                          type="checkbox"
+                          id="plot1"
+                          name="plot1"
+                          checked
+                          @click="hidePlot"
+                        />
+                        <label class="color_label" for="plot1">U, B</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="color"></div>
+                      <div class="plot">
+                        <input
+                          class="color_option"
+                          type="checkbox"
+                          id="plot2"
+                          name="plot2"
+                          @click="hidePlot"
+                        />
+                        <label class="color_label" for="plot2">Ia, A</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="color"></div>
+                      <div class="plot">
+                        <input
+                          class="color_option"
+                          type="checkbox"
+                          id="plot3"
+                          name="plot3"
+                          @click="hidePlot"
+                        />
+                        <label class="color_label" for="plot3">Ib, A</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="plots">
+                <div class="plot1">
+                  <canvas id="myChart1"></canvas>
+                </div>
+                <div class="plot2 hidden">
+                  <canvas id="myChart2"></canvas>
+                </div>
+                <div class="plot3 hidden">
+                  <canvas id="myChart3"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <script defer src="script.js"></script>
+  </body>
+</html>

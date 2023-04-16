@@ -1,0 +1,38 @@
+.hidden { 
+  display: none;
+}
+
+.settings_down {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.row:nth-child(2) .color {
+  background-color: blue;
+}
+
+.row:nth-child(3) .color {
+  background-color: green;
+}
+
+.color {
+  width: 30px;
+  height: 20px;
+  background-color: red;
+}
+
+#plots {
+  width: 1000px;
+  margin-left: 30px;
+}
+
+.menu {
+  display: flex;
+  margin-top: 30px;
+}

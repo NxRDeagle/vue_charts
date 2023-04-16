@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    
+  </head>
+
+  <body>
+    <div id="app">
+      <header> 
+        <button class="option">Выбор файла</button>
+        <button class="option">Данные</button>
+        <button class="option">Параметры по КП</button>
+        <button class="option">Установки</button>
+        <button class="option">Запуски/остановы</button>
+        <button class="option">Счетчики</button>
+        <button class="option">Текущее состояние</button>
+        <button class="option">Пусковые характеристики</button>
+        <button class="option">Диаграммы</button>
+        <button class="option">Графики</button>
+      </header>
+      <div class="menu">
+        <div class="settings">
+          <div class="settings_top">
+            <div>
+              <input type="checkbox" id="dots" name="dots" @click="addDots" />
+              <label for="dots">Показать точки</label>
+            </div>
+
+            <div class="razmer">
+              <span>Толщина линии</span>
+              <select id="tolsh">
+                <option selected value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+          <div class="settings_down">
+            <div class="row">
+              <div class="color"></div>
+              <div class="plot">
+                <input
+                  type="checkbox"
+                  id="plot1"
+                  name="plot1"
+                  checked
+                  @click="hidePlot"
+                />
+                <label for="plot1">U,B</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="color"></div>
+              <div class="plot">
+                <input
+                  type="checkbox"
+                  id="plot2"
+                  name="plot2"
+                  @click="hidePlot"
+                />
+                <label for="plot2">Ia,A</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="color"></div>
+              <div class="plot">
+                <input
+                  type="checkbox"
+                  id="plot3"
+                  name="plot3"
+                  @click="hidePlot"
+                />
+                <label for="plot3">Ib,A</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="plots">
+          <div class="plot1">
+            <canvas id="myChart1"></canvas>
+          </div>
+          <div class="plot2 hidden">
+            <canvas id="myChart2"></canvas>
+          </div>
+          <div class="plot3 hidden">
+            <canvas id="myChart3"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.6/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
